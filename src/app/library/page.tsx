@@ -17,10 +17,15 @@ export default function LibraryPage() {
   const [selectedBook, setSelectedBook] = useState(null);
   const [readingStats, setReadingStats] = useState({ booksRead: 0, pagesRead: 0 });
 
+
+  //const wantToRead = [];
   const [wantToRead, setWantToRead] = useState([]);
+  //const library = [];
   const [library, setLibrary] = useState([]);
   const [currentlyReading, setCurrentlyReading] = useState([]);
   const [finished, setFinished] = useState([]);
+  
+  
 
   useEffect(() => {
     const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
