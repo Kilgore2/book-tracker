@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
-import { auth, googleProvider, db } from "@/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth, db } from "@/firebase";
 import { collection, onSnapshot, setDoc, doc, deleteDoc, getDoc, getDocs } from "firebase/firestore";
 import { EB_Garamond } from "next/font/google";
 
@@ -12,7 +12,6 @@ export default function LibraryPage() {
   const [user, setUser] = useState(null);
   const [searchVisible, setSearchVisible] = useState(false);
   const [query, setQuery] = useState("");
-  const [sortBy, setSortBy] = useState("relevance");
   const [results, setResults] = useState([]);
   const [editing, setEditing] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
@@ -132,7 +131,7 @@ export default function LibraryPage() {
   
 
   const searchBooks = async () => {
-    let apiUrl = `https://www.googleapis.com/books/v1/volumes?q=${query}&orderBy=${sortBy}&maxResults=10`;
+    const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=${query}`;
     const response = await fetch(apiUrl);
     const data = await response.json();
   
@@ -214,7 +213,7 @@ export default function LibraryPage() {
           
           <div className="flex overflow-x-auto mt-4">
   {results.map((book) => (
-    <div className="w-32 p-2 flex flex-col justify-between bg-white shadow-md rounded-md">
+    <div key={book.id} className="w-32 p-2 flex flex-col justify-between bg-white shadow-md rounded-md">
     {/* Book Cover */}
     <div>
       <img 
